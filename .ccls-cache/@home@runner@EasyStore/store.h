@@ -23,6 +23,7 @@ public:
   void deleteProductToClient(unsigned idClient, Product product);
   void setQuantityProductToClient(unsigned idClient, Product product, unsigned quantity);
   void validateOrder(Client &client);
+  void changeStatusOrder(Order order, STATUS_ORDER status);
 
 private:
   std::vector<Product> _products;

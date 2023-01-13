@@ -13,9 +13,7 @@ void Store::addProduct(Product product) {
   }
 }
 
-void Store::addClient(Client client) {
-  _clients.push_back(client); 
-}
+void Store::addClient(Client client) { _clients.push_back(client); }
 
 void Store::showClients() const {
   for (const Client &c : _clients) {
@@ -132,4 +130,8 @@ void Store::showPreviousOrder(const Client &c) const {
       std::cout << order << std::endl;
     }
   }
+}
+
+void Store::changeStatusOrder(Order order, STATUS_ORDER status) {
+  order.setStatus(status);
 }
