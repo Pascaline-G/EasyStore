@@ -13,7 +13,9 @@ void Store::addProduct(Product product) {
   }
 }
 
-void Store::addClient(Client client) { _clients.push_back(client); }
+void Store::addClient(Client client) {
+  _clients.push_back(client); 
+}
 
 void Store::showClients() const {
   for (const Client &c : _clients) {
@@ -112,7 +114,7 @@ void Store::validateOrder(Client &client) {
   }
 
   Order order(client);
-  order.setStatus("VALIDE");
+  order.setStatus(STATUS_ORDER::VALIDE);
   _orders.push_back(order);
   client.clearProducts();
   std::cout << "Command validé" << std::endl;

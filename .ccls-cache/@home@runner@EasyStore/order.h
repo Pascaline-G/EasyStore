@@ -5,20 +5,31 @@
 #include <string>
 #include <unordered_map>
 
+enum STATUS_ORDER {
+  VALIDE,
+  PAYE,
+  ENVOYE,
+  RECU,
+  ANNULE,
+};
+
 class Order {
 public:
   Order(Client client);
   Client getClient() const;
   std::unordered_map<std::string, unsigned> getProducts() const;
-  std::string getStatus() const;
-  void setStatus(std::string status);
+  STATUS_ORDER getStatus() const;
+  void setStatus(STATUS_ORDER status);
+  std::string statusToString(STATUS_ORDER status) const;
 
   friend std::ostream &operator<<(std::ostream &os, const Order &order);
 
 private:
   Client _client;
   std::unordered_map<std::string, unsigned> _products;
-  std::string status;
+  STATUS_ORDER status;
+
+  
 };
 
 #endif
