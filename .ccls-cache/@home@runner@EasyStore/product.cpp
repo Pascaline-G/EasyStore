@@ -58,3 +58,8 @@ std::ostream& operator<<(std::ostream& os, Product& product)
     os << "quantité restante : " <<  product.getQuantity() << " . Prix unitaire : " << product.getPrice() << std::endl;
     return os;
 }
+
+bool operator == (Product const &prod1, Product const &prod2)
+{
+  return (prod1.getTitle() == prod2.getTitle());
+}

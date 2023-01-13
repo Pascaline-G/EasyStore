@@ -11,6 +11,7 @@ public:
   Store(std::vector<Product> products = {}, std::vector<Client> clients = {},
         std::vector<Order> orders = {});
   void addProduct(Product product);
+  void deleteProduct(int index);
   void addClient(Client client);
   void showClients() const;
   void showClient(unsigned id);
@@ -24,6 +25,8 @@ public:
   void setQuantityProductToClient(unsigned idClient, Product product, unsigned quantity);
   void validateOrder(Client &client);
   void changeStatusOrder(Order order, STATUS_ORDER status);
+  int sizeProducts();
+  int sizeClients();
 
 private:
   std::vector<Product> _products;

@@ -1,4 +1,5 @@
 #include "store.h"
+#include <algorithm>
 
 Store::Store(std::vector<Product> products, std::vector<Client> clients,
              std::vector<Order> orders)
@@ -11,6 +12,11 @@ void Store::addProduct(Product product) {
     _products.push_back(product);
     std::cout << "Produit ajouté" << std::endl;
   }
+}
+
+void Store::deleteProduct(int index) {
+  _products.erase(_products.begin() + index);
+
 }
 
 void Store::addClient(Client client) { _clients.push_back(client); }
@@ -135,3 +141,7 @@ void Store::showPreviousOrder(const Client &c) const {
 void Store::changeStatusOrder(Order order, STATUS_ORDER status) {
   order.setStatus(status);
 }
+
+int Store::sizeProducts() { return _products.size(); }
+
+int Store::sizeClients() { return _clients.size(); }

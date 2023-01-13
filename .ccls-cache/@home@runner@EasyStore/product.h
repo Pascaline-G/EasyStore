@@ -26,4 +26,5 @@ private:
   float _price;
 };
 
+bool operator==(Product const &prod1, Product const &prod2);
 #endif

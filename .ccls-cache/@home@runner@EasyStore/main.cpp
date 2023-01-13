@@ -1,38 +1,23 @@
 #include "client.h"
+#include "menu.h"
 #include "order.h"
 #include "store.h"
+#include <fstream>
 #include <iostream>
 
+void save(Store mag) {
+  std::filebuf fb;
+  fb.open("save.txt", std::ios::trunc | std::ios::out);
+  std::ostream os(&fb);
+  os << "Bouh" << std::endl;
+  fb.close();
+}
+
 int main() {
+  std::cout << "Bonjour et Bienvenu dans la gestion du magasin easy store !"
+            << std::endl;
   Store mag;
-  Product p("test", "produit test", 5, 1.2);
-  Product p2("tes2t", "produit tes2t", 5, 7.2);
-  Product p3("salut", "produit tes2t", 5, 7.2);
-  mag.addProduct(p);
-  mag.addProduct(p);
-  mag.addProduct(p2);
-  mag.addProduct(p3);
-  mag.showProducts();
-  mag.showProduct("test");
-
-  Client c(1, "a", "b");
-  Client c2(2, "aaa", "bcc");
-  c.addProduct(p);
-  c.addProduct(p);
-  c.addProduct(p2);
-  c.deleteProduct(p2);
-  c.addProduct(p2);
-
-  mag.addClient(c);
-  mag.addClient(c2);
-  mag.showClients();
-  mag.addProductToClient(c.getId(), p3);
-  ;
-  mag.showClient(c.getId());
-
-  mag.validateOrder(c);
-
-  std::cout << c << std::endl;
-
-  mag.showPreviousOrder();
+  Menu menu(mag);
+  save(mag);
+  menu.showMainMenu();
 }
