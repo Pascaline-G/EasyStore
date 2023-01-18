@@ -14,6 +14,13 @@ void save(Store mag) {
 }
 
 int main() {
+  std::string bouh;
+  std::cin >> bouh;
+
+  std::cout << bouh << std::endl;
+  std::cout << "hey" << std::endl;
+
+  
   std::cout << "Bonjour et Bienvenu dans la gestion du magasin easy store !"
             << std::endl;
   Store mag;

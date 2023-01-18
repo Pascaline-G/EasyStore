@@ -39,6 +39,8 @@ void Client::deleteProduct(const Product &product) {
   }
 }
 
+void Client::showPanier() {}
+
 std::ostream &operator<<(std::ostream &os, const Client &client) {
   os << "-----------------------" << std::endl;
   os << client._firstname << " " << client._name << std::endl;

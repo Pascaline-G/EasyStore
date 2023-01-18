@@ -27,13 +27,14 @@ public:
   void changeStatusOrder(Order order, STATUS_ORDER status);
   int sizeProducts();
   int sizeClients();
+  Product &findProduct(unsigned id);
+  Product *findProduct(std::string title);
+  Client *findClient(unsigned id);
 
 private:
   std::vector<Product> _products;
   std::vector<Client> _clients;
   std::vector<Order> _orders;
-  Product *findProduct(std::string title);
-  Client *findClient(unsigned id);
 };
 
 #endif

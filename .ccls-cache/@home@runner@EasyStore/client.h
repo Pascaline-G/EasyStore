@@ -19,6 +19,7 @@ public:
   void addProduct(const Product &product);
   void deleteProduct(const Product &product);
   void clearProducts();
+  void showPanier();
 
 friend std::ostream &operator<<(std::ostream &os, const Client &client);
 

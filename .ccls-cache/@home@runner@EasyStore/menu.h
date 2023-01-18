@@ -13,8 +13,13 @@ public:
   void productMenu();
   void choiceProductMenu(int choice);
   void addProduct();
-  void DeleteProduct();
+  void deleteProduct();
+  void modifyProduct();
   void clientsMenu();
+  void choiceClientMenu(int choice);
+  void addClient();
+  void modifyClient();
+  void showPanierClient();
   void ordersMenu();
 
 private:

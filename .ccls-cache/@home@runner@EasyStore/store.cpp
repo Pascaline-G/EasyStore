@@ -16,10 +16,11 @@ void Store::addProduct(Product product) {
 
 void Store::deleteProduct(int index) {
   _products.erase(_products.begin() + index);
-
 }
 
-void Store::addClient(Client client) { _clients.push_back(client); }
+void Store::addClient(Client client) { 
+  _clients.push_back(client); 
+}
 
 void Store::showClients() const {
   for (const Client &c : _clients) {
@@ -37,8 +38,11 @@ void Store::showClient(unsigned id) {
 }
 
 void Store::showProducts() {
+  int i = 1;
   for (Product p : _products) {
+    std::cout << i << " : ";
     std::cout << p;
+    i++;
   }
 }
 
@@ -140,6 +144,10 @@ void Store::showPreviousOrder(const Client &c) const {
 
 void Store::changeStatusOrder(Order order, STATUS_ORDER status) {
   order.setStatus(status);
+}
+
+Product& Store::findProduct(unsigned id){
+  return _products.at(id-1);
 }
 
 int Store::sizeProducts() { return _products.size(); }
