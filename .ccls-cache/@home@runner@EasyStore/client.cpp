@@ -9,6 +9,10 @@ std::string Client::getFirstName() const { return _firstname; }
 
 std::string Client::getName() const { return _name; }
 
+void Client::setFirstName(std::string firstname) { _firstname= firstname; }
+
+void Client::setName(std::string name) {_name = name; }
+
 std::unordered_map<std::string, unsigned> Client::getProducts() const {
   return _products;
 }
@@ -39,7 +43,13 @@ void Client::deleteProduct(const Product &product) {
   }
 }
 
-void Client::showPanier() {}
+void Client::showPanier() const{
+  std::cout << "-----------------------" << std::endl;
+  for(auto it = _products.begin(); it != _products.end(); it ++){
+    std::cout << (*it).first << " : " << (*it).second << std::endl;
+  }
+  std::cout << "-----------------------" << std::endl;
+}
 
 std::ostream &operator<<(std::ostream &os, const Client &client) {
   os << "-----------------------" << std::endl;

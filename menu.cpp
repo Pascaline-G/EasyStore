@@ -8,7 +8,7 @@ void Menu::showMainMenu() {
     std::cout << "Que souhaitez vous faire ?" << std::endl;
     std::cout << "1 - Gestion des produits ? " << std::endl;
     std::cout << "2 - Gestion des clients ? " << std::endl;
-    std::cout << "3 - Gestion des commandes ? " << std::endl;
+    std::cout << "3 - Voir les commandes ? " << std::endl;
     std::cin.clear();
     std::cin >> choice;
 
@@ -25,7 +25,7 @@ void Menu::choiceMainMenu(int choice) {
     clientsMenu();
     break;
   case 3:
-    ordersMenu();
+    _mag.showPreviousOrder();
     break;
   default:
     break;
@@ -102,7 +102,7 @@ void Menu::modifyProduct() {
   std::cout << "Quel prodruit est à modifier ?" << std::endl;
   std::cin >> id;
   while (id <= 0 || id > _mag.sizeProducts()) {
-    std::cout << "Valeur invalide, saississez une autre";
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
     std::cin >> id;
   }
   Product &p = _mag.findProduct(id);
@@ -141,6 +141,9 @@ void Menu::clientsMenu() {
   std::cout << "2 - Ajouter un client ? " << std::endl;
   std::cout << "3 - Modifier un client ? " << std::endl;
   std::cout << "4 - Voir le panier d'un client" << std::endl;
+  std::cout << "5 - Modifier le panier d'un client" << std::endl;
+  std::cout << "6 - Voir les commandes d'un client" << std::endl;
+  std::cout << "7 - Valider un panier" << std::endl;
   std::cin >> choice;
   std::cin.clear();
   choiceClientMenu(choice);
@@ -156,8 +159,19 @@ void Menu::choiceClientMenu(int choice) {
     break;
   case 3:
     modifyClient();
+    break;
   case 4:
     showPanierClient();
+    break;
+  case 5:
+    modifyPanierClient();
+    break;
+  case 6 : 
+    showOrderClient();
+    break;
+  case 7: 
+    validateOrderClient();
+    break;
   default:
     break;
   }
@@ -166,36 +180,138 @@ void Menu::choiceClientMenu(int choice) {
 void Menu::addClient() {
   unsigned id;
   std::string firstname, name;
-
+  srand (time(NULL));
   std::cout << "Entrez le nom du client  :" << std::endl;
   std::cin >> name;
   std::cout << "Entrez le prénom du client  :" << std::endl;
   std::cin >> firstname;
-  id = _mag.sizeClients()+1;
+  id = rand() % 1000000;
   _mag.addClient(Client(id, firstname, name));
 }
 
 void Menu::modifyClient() {
   std::string firstname, name;
-
+  unsigned id;
+  _mag.showClients();
+  std::cout << "Quel client est à modifier ?" << std::endl;
+  std::cin >> id;
+  while (_mag.findClient(id)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> id;
+  }
   std::cout << "Entrez le nom du client  :" << std::endl;
   std::cin >> name;
   std::cout << "Entrez le prénom du client  :" << std::endl;
   std::cin >> firstname;
+  Client &c = *_mag.findClient(id);
+  c.setFirstName(firstname);
+  c.setName(name);
 }
 
 void Menu::showPanierClient() {
   int id = 0;
   _mag.showClients();
-  std::cout << "Quel client est à supprimer ?" << std::endl;
+  std::cout << "De quel client voulez vous voir le panier ?" << std::endl;
   std::cin >> id;
-  _mag.show
-  Client c = _mag.findClient(id);
+  while (_mag.findClient(id)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> id;
+  }
+  (*_mag.findClient(id)).showPanier();
 }
 
-void Menu::ordersMenu() {
-  std::cout << "Que souhaitez vous faire ?" << std::endl;
+void Menu::modifyPanierClient(){
+  unsigned id;
+  _mag.showClients();
+  std::cout << "Quel client est à modifier ?" << std::endl;
+  std::cin >> id;
+  while (_mag.findClient(id)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> id;
+  }
+  Client &c = *_mag.findClient(id);
+  c.showPanier();
 
-  std::cout << "1 - Voir la liste des commandes? " << std::endl;
-  std::cout << "2 - Merttre à jour une Commande ? " << std::endl;
+  std::cout << "Que souhaitez vous faire ?" << std::endl;
+  std::cout << "1 - Ajouter un produit ?" << std::endl;
+  std::cout << "2 - Supprimer un produit ?" << std::endl;
+  std::cout << "3 - Modifier la quantité d'un produit ?" << std::endl;
+  int choice;
+  std::cin >> choice;
+  switch (choice) {
+    case 1:
+      addProductClient(c);
+      break;
+    case 2:
+      deleteProductClient(c);
+      break;
+    case 3:
+      modifyQuantityClient(c);
+      break;
+    default:
+      break;
+  }
+}
+
+void Menu::addProductClient(Client &c){
+  _mag.showProducts();
+  std::cout << "Quel produit ajouter ?" << std::endl;
+  int id;
+  std::cin >> id;
+  while (id <= 0 || id > _mag.sizeProducts()) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> id;
+  }
+  c.addProduct(_mag.findProduct(id));
+}
+
+void Menu::deleteProductClient(Client &c){
+  c.showPanier();
+  std::cout << "Quel produit suprimer ? Entrez le titre" << std::endl;
+  std::string titre;
+  std::cin >> titre;
+  while (_mag.findProduct(titre)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> titre;
+  }
+
+  c.deleteProduct(*_mag.findProduct(titre));
+}
+
+void Menu::modifyQuantityClient(Client &c){
+  c.showPanier();
+  std::cout << "Quel produit modifier ? Entrez le titre" << std::endl;
+  std::string titre;
+  std::cin >> titre;
+  while (_mag.findProduct(titre)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> titre;
+  }
+  unsigned quant = 0;
+  std::cout << "Entrez la nouvelle quantité" << std::endl;
+  c.setQuantity(*_mag.findProduct(titre),quant);
+}
+
+void Menu::showOrderClient() {
+  int id = 0;
+  _mag.showClients();
+  std::cout << "De quel client voulez vous voir le panier ?" << std::endl;
+  std::cin >> id;
+  while (_mag.findClient(id)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> id;
+  }
+  _mag.showPreviousOrder(*_mag.findClient(id));
+}
+
+void Menu::validateOrderClient(){
+  int id = 0;
+  _mag.showClients();
+  std::cout << "De quel client voulez vous valider le panier ?" << std::endl;
+  std::cin >> id;
+  while (_mag.findClient(id)==nullptr) {
+    std::cout << "Valeur invalide, saississez une autre" << std::endl;
+    std::cin >> id;
+  }
+  _mag.validateOrder(*_mag.findClient(id));
 }

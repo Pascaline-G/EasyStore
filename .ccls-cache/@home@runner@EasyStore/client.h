@@ -13,13 +13,14 @@ public:
   unsigned getId() const;
   std::string getFirstName() const;
   std::string getName() const;
+  void setFirstName(std::string firstname);
+  void setName(std::string name);
   std::unordered_map<std::string, unsigned> getProducts() const;
   void setQuantity(const Product &product, unsigned quantity);
-
+  void showPanier() const;
   void addProduct(const Product &product);
   void deleteProduct(const Product &product);
   void clearProducts();
-  void showPanier();
 
 friend std::ostream &operator<<(std::ostream &os, const Client &client);
 

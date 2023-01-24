@@ -54,9 +54,11 @@ void Product::changeQuantity(int quantity)
 
 std::ostream& operator<<(std::ostream& os, Product& product)
 {
-    os << product.getTitle() << ':' <<  product.getDescription() << std::endl;
-    os << "quantité restante : " <<  product.getQuantity() << " . Prix unitaire : " << product.getPrice() << std::endl;
-    return os;
+  os << "-----------------------" << std::endl;
+  os << product.getTitle() << ':' <<  product.getDescription() << std::endl;
+  os << "quantité restante : " <<  product.getQuantity() << " . Prix unitaire : " << product.getPrice() << std::endl;
+  os << "-----------------------" << std::endl;
+  return os;
 }
 
 bool operator == (Product const &prod1, Product const &prod2)
